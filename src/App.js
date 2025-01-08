@@ -86,7 +86,7 @@ const App = () => {
         title: 'Block 9',
         image: '/images/2023-01-30.jpg',
         description: ' Mettu University, known for its beautiful campus and quality education.',
-        text: 'the block 9 is text',
+        text: 'the block 9 is text1111111111111',
         link: 'https://www.mettu.edu.et',
         sections: [
           { id: 'overview', title: 'Overview', content: 'This is the main gate of Mettu University.' },
