@@ -61,7 +61,7 @@ const App = () => {
     },
     {
       id: 4,
-      title: 'Mau Cafeteria',
+      title: 'Mau Cafe',
       coordinates: [35.556823, 8.319175],
       icon: '/images/dish.png',
       popupContent: {
