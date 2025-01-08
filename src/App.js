@@ -48,7 +48,7 @@ const App = () => {
       coordinates: [35.559407, 8.317804],
       icon: '/images/coffee.png',
       popupContent: {
-        title: 'Raha Cafe',
+        title: 'Raha Cafe11111111',
         image: '/images/2023-01-30.jpg',
         description: 'A place to relax and enjoy your favorite beverages.',
         link: 'https://www.mettu.edu.et/cafe',
