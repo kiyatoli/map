@@ -9,7 +9,7 @@ const App = () => {
   const markersData = [
     {
       id: 1,
-      title: 'Mau Gate',
+      title: 'Mau Main Gate',
       coordinates: [35.5592988160932, 8.31862701811819],
       icon: '/images/torri-gate.png',
       popupContent: {
