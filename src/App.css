@@ -27,6 +27,44 @@
 .App-link {
   color: #61dafb;
 }
+.popup-content {
+  font-family: Arial, sans-serif;
+}
+
+.nav-bar {
+  display: flex;
+  margin-top: 10px;
+}
+
+.nav-bar button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.section-content {
+  margin-top: 15px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.side-panel {
+  position: fixed;
+  top: 10%;
+  left: 0;
+  width: 20%;
+  height: 80%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.side-panel button {
+  margin-top: 10px;
+}
+
 
 @keyframes App-logo-spin {
   from {

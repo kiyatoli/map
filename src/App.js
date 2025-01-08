@@ -1,15 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import './App.css'; // Combined styles for Map and Popup
+import './App.css';
 
 const App = () => {
   const mapContainerRef = useRef(null);
+  const [sidePanelContent, setSidePanelContent] = useState(null);
+  const [activeSection, setActiveSection] = useState(null);
 
   const markersData = [
     {
       id: 1,
-      title: 'Mau Main Gate',
+      title: 'Mau Gate',
       coordinates: [35.5592988160932, 8.31862701811819],
       icon: '/images/torri-gate.png',
       popupContent: {
@@ -17,6 +19,11 @@ const App = () => {
         image: '/images/2023-01-30.jpg',
         description: 'Main Gate of Mettu University, known for its beautiful campus and quality education.',
         link: 'https://www.mettu.edu.et',
+        sections: [
+          { id: 'overview', title: 'Overview', content: 'This is the main gate of Mettu University.' },
+          { id: 'history', title: 'History', content: 'The gate was established in 1990 and has since been a landmark.' },
+          { id: 'contact', title: 'Contact', content: 'You can contact the university at +251 123 456 789.' },
+        ],
       },
     },
     {
@@ -29,6 +36,10 @@ const App = () => {
         image: '/images/2023-06-24.jpg',
         description: 'A place to access knowledge and study.',
         link: 'https://www.mettu.edu.et/library',
+        sections: [
+          { id: 'overview', title: 'Overview', content: 'The library is equipped with modern facilities for students.' },
+          { id: 'rules', title: 'Rules', content: 'Maintain silence and handle books with care.' },
+        ],
       },
     },
     {
@@ -41,6 +52,48 @@ const App = () => {
         image: '/images/2023-01-30.jpg',
         description: 'A place to relax and enjoy your favorite beverages.',
         link: 'https://www.mettu.edu.et/cafe',
+        sections: [
+          { id: 'overview', title: 'Overview', content: 'A popular spot for students and staff to unwind.' },
+          { id: 'menu', title: 'Menu', content: 'Serves a variety of coffees, teas, and snacks.' },
+          { id: 'hours', title: 'Opening Hours', content: 'Open daily from 8 AM to 6 PM.' },
+        ],
+      },
+    },
+    {
+      id: 4,
+      title: 'Mau Cafeteria',
+      coordinates: [35.556823, 8.319175],
+      icon: '/images/dish.png',
+      popupContent: {
+        title: 'Mau Cafeteria',
+        image: '/images/2023-01-30.jpg',
+        description: 'A cozy place offering a variety of meals and refreshments for students and staff.',
+        text: 'the block 9 is text',
+        link: 'https://www.mettu.edu.et/cafeteria',
+        text: 'the cafeteria is text',
+        sections: [
+          { id: 'menu', title: 'Menu', content: 'Offers breakfast, lunch, dinner, and snacks with vegetarian and non-vegetarian options.' },
+          { id: 'hours', title: 'Operating Hours', content: 'Open from 7:00 AM to 9:00 PM, Monday to Saturday.' },
+        ],
+      },
+    },
+    {
+      id: 5,
+      title: 'Block 9',
+      coordinates: [35.559210, 8.315757],
+      icon: '/images/offices.png',
+      popupContent: {
+        title: 'Block 9',
+        image: '/images/2023-01-30.jpg',
+        description: 'Main Gate of Mettu University, known for its beautiful campus and quality education.',
+        text: 'the block 9 is text',
+        link: 'https://www.mettu.edu.et',
+        sections: [
+          { id: 'overview', title: 'Overview', content: 'This is the main gate of Mettu University.' },
+          { id: 'history', title: 'History', content: 'The gate was established in 1990 and has since been a landmark.' },
+          { id: 'contact', title: 'Contact', content: 'You can contact the university at +251 123 456 789.' },
+          
+        ],
       },
     },
   ];
@@ -49,7 +102,7 @@ const App = () => {
     const key = 'p0PAWI3muE2doYKnQGWq';
 
     const bounds = [
-      [35.5400, 8.3000], 
+      [35.5400, 8.3000],
       [35.5700, 8.3280],
     ];
 
@@ -97,7 +150,6 @@ const App = () => {
     popupDiv.className = 'popup-content';
 
     const title = document.createElement('h3');
-    title.style.margin = '0';
     title.textContent = content.title;
 
     const image = document.createElement('img');
@@ -105,26 +157,26 @@ const App = () => {
     image.alt = content.title;
     image.style.width = '100%';
     image.style.maxWidth = '200px';
-    image.style.borderRadius = '8px';
 
     const description = document.createElement('p');
-    description.style.margin = '10px 0';
     description.textContent = content.description;
+
+    const text= document.createElement ('p');
+    text.textContent = content.text;
 
     const link = document.createElement('a');
     link.href = content.link;
     link.target = '_blank';
-    link.className = 'popup-link';
     link.textContent = 'Visit Official Website';
 
     const seeMoreButton = document.createElement('button');
     seeMoreButton.textContent = 'See More';
-    seeMoreButton.className = 'see-more-button';
     seeMoreButton.onclick = () => openDetails(content);
 
     popupDiv.appendChild(title);
     popupDiv.appendChild(image);
     popupDiv.appendChild(description);
+    popupDiv.appendChild(text);
     popupDiv.appendChild(link);
     popupDiv.appendChild(seeMoreButton);
 
@@ -132,38 +184,61 @@ const App = () => {
   };
 
   const openDetails = (content) => {
-    let sidePanel = document.querySelector('.side-panel');
-  
-    if (!sidePanel) {
-      // Create the side panel if it doesn't exist
-      sidePanel = document.createElement('div');
-      sidePanel.className = 'side-panel';
-      sidePanel.style.position = 'relative';
-      sidePanel.style.top = '10%';
-      sidePanel.style.left = '0';
-      sidePanel.style.width = '20%';
-      sidePanel.style.height = '615px';
-      sidePanel.style.backgroundColor = '#fff';
-      sidePanel.style.border = '1px solid #ccc';
-      sidePanel.style.padding = '10px';
-      sidePanel.style.overflowY = 'auto';
-      sidePanel.style.zIndex = '1000';
-  
-      // Append the panel to the body
-      document.body.appendChild(sidePanel);
-    }
-  
-    // Update the side panel's content
-    sidePanel.innerHTML = `
-      <h2>${content.title}</h2>
-      <img src="${content.image}" alt="${content.title}" style="width: 100%; border-radius: 8px;" />
-      <p>${content.description}</p>
-      <a href="${content.link}" target="_blank" class="popup-link">Visit Official Website</a>
-      <button onclick="document.body.removeChild(this.parentNode)" style="margin-top: 10px;">Close</button>
-    `;
+    setSidePanelContent(content);
+    setActiveSection(content.sections ? content.sections[0].id : null);
   };
-  
-  return <div ref={mapContainerRef} style={{ position: 'absolute', top: 0, bottom: 0, width: '100%' }}></div>;
+
+  const renderActiveSection = () => {
+    if (!activeSection || !sidePanelContent) return null;
+    const section = sidePanelContent.sections.find((sec) => sec.id === activeSection);
+    return section ? <p>{section.content}</p> : <p>Section not found.</p>;
+  };
+
+  const closeSidePanel = () => {
+    setSidePanelContent(null);
+  };
+
+  return (
+    <div>
+      <div ref={mapContainerRef} style={{ position: 'absolute', top: 0, bottom: 0, width: '100%' }}></div>
+
+      {sidePanelContent && (
+        <div className="side-panel">
+          <button className="close-button" onClick={closeSidePanel}>
+            X
+          </button>
+          <h2>{sidePanelContent.title}</h2>
+          <img
+            src={sidePanelContent.image}
+            alt={sidePanelContent.title}
+            style={{ width: '100%', borderRadius: '8px' }}
+          />
+          <p>{sidePanelContent.description}</p>
+          <a
+            href={sidePanelContent.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit Official Website
+          </a>
+
+          <div className="nav-bar">
+            {sidePanelContent.sections.map((section) => (
+              <button
+                key={section.id}
+                className={section.id === activeSection ? 'active' : ''}
+                onClick={() => setActiveSection(section.id)}
+              >
+                {section.title}
+              </button>
+            ))}
+          </div>
+
+          <div className="section-content">{renderActiveSection()}</div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default App;
