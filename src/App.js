@@ -85,7 +85,7 @@ const App = () => {
       popupContent: {
         title: 'Block 9',
         image: '/images/2023-01-30.jpg',
-        description: 'Main Gate of Mettu University, known for its beautiful campus and quality education.',
+        description: ' Mettu University, known for its beautiful campus and quality education.',
         text: 'the block 9 is text',
         link: 'https://www.mettu.edu.et',
         sections: [
